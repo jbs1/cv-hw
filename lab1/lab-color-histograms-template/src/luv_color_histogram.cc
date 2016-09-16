@@ -123,7 +123,7 @@ bool LuvColorHistogram::load(const Mat& color_img, const Mat& mask, bool accumul
 }
 
 bool LuvColorHistogram::load(const std::string& image_path_name, bool accumulate){
-	Mat color_img= imread(image_path_name.c_str());
+	color_img= imread(image_path_name.c_str());
 	if(!color_img.data){
 		std::cerr<< "could not open "<< image_path_name<< endl;
 		return false;

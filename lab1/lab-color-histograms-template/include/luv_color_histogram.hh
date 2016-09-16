@@ -155,6 +155,8 @@ class LuvColorHistogram {
 		cv::MatND _hist; ///< This will be normalized (sum=1) in the load function.
 		int _nr_samples;
 		cv::Mat _color_luv; // cached from the last computation
+	public:
+		cv::Mat color_img;
 };
 }
 #endif
