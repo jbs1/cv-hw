@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include "luv_color_histogram.hh"
 #include <opencv2/highgui/highgui.hpp>
+#include <cstdlib>
 
 using namespace std;
 using namespace jir;
@@ -22,7 +23,7 @@ bool verify_folder(path& p){
 	return true;
 }
 
-void load(path& p, vector<LuvColorHistogram>& hist_vector){
+void load(path& p, vector<LuvColorHistogram>& hist_vector, const char* h, const char* s, const char* v){
 	directory_iterator it(p);
 	directory_iterator end_it;
 
@@ -30,7 +31,7 @@ void load(path& p, vector<LuvColorHistogram>& hist_vector){
 	for(;it != end_it; ++it)
     {
 
-            LuvColorHistogram inp;
+            LuvColorHistogram inp(atoi(h),atoi(s),atoi(v));
             inp.load(it->path().string(),false);
             hist_vector.push_back(inp);
     }
@@ -88,8 +89,8 @@ void compare_hist_vectors(const vector<LuvColorHistogram>& h1, const vector<LuvC
 
 int main(int argc, const char* argv[]) {
 
-	if (argc < 2){
-		cerr<< "Usage: \n"<< argv[0]<< " [folder name]"<< endl;
+	if (argc < 5){
+		cerr<< "Usage: \n"<< argv[0]<< " [folder name] [H bins] [S bins] [V Bins]"<< endl;
 		return -1;
 	}
 
@@ -101,9 +102,9 @@ int main(int argc, const char* argv[]) {
 	vector<LuvColorHistogram> hist_train;
 	vector<LuvColorHistogram> hist_test;
 
-	load(test, hist_test);
+	load(test, hist_test, argv[2], argv[3], argv[4]);
 	cout<< "*** loaded "<< hist_test.size()<< " test samples."<< endl;
-	load(train, hist_train);
+	load(train, hist_train, argv[2], argv[3], argv[4]);
 	cout<< "*** loaded "<< hist_test.size()<< " training samples."<< endl;
 
 	cout<< "Comparing histograms"<< endl;

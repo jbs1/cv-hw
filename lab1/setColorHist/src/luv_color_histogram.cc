@@ -63,13 +63,13 @@ LuvColorHistogram::LuvColorHistogram(unsigned int nr_bins_l, unsigned int nr_bin
 	_histSize[2]= int(nr_bins_v);
 
 	_l_ranges[0]= 0.0;
-	_l_ranges[1]= 100.0 + 0.01;
+	_l_ranges[1]= 1.0 + 0.01;
 
-	_u_ranges[0]= -134.0;
-	_u_ranges[1]= 220.0 + 0.01;
+	_u_ranges[0]= 0.0;
+	_u_ranges[1]= 1.0 + 0.01;
 
-	_v_ranges[0]= -140.0;
-	_v_ranges[1]= 122.0 + 0.01;
+	_v_ranges[0]= 0.0;
+	_v_ranges[1]= 360.0 + 0.01;
 }
 
 void LuvColorHistogram::normalize(void){
@@ -97,7 +97,7 @@ bool LuvColorHistogram::load(const Mat& color_img, const Mat& mask, bool accumul
 
 	// Read the documentation of cvtColor:
 	// http://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor
-	cvtColor(color_img_float, _color_luv, CV_BGR2Luv);
+	cvtColor(color_img_float, _color_luv, CV_BGR2HSV);
 
 	int channels[] = {0, 1, 2};
 	const float* ranges[]= {_l_ranges, _u_ranges, _v_ranges};
